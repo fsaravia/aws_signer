@@ -28,20 +28,20 @@ type Signer struct {
 	AccessKeySecret string
 }
 
-func (signer *Signer) Sign(request *http.Request) {
+func (signer *Signer) Sign(request *http.Request, payload string) {
 	timestamp := time.Now().UTC()
 
 	request.Header.Add(dateHeader, timestamp.Format(time.RFC3339))
 
 	signedHeaders := signedHeaders(request.Header)
 	credential := fmt.Sprintf("%s/%s", signer.AccessKeyID, credentialScope(timestamp, signer.Region, signer.Service))
-	signature := AWSSignature(request, timestamp, signer.Region, signer.Service, signer.AccessKeySecret)
+	signature := AWSSignature(request, payload, timestamp, signer.Region, signer.Service, signer.AccessKeySecret)
 
 	request.Header.Add("Authorization", fmt.Sprintf("%s, Credential=%s, SignedHeaders=%s, Signature=%s", algorithm, credential, signedHeaders, signature))
 }
 
-func AWSSignature(request *http.Request, timestamp time.Time, region, service, key string) string {
-	string := canonicalString(request)
+func AWSSignature(request *http.Request, payload string, timestamp time.Time, region, service, key string) string {
+	string := canonicalString(request, payload)
 	hashed := fmt.Sprintf("%x", sha256.Sum256([]byte(string)))
 	stringToSign := stringToSign(timestamp, region, service, hashed)
 	signingKey := deriveSigningKey(key, timestamp, region, service)
@@ -100,7 +100,7 @@ func credentialScope(timestamp time.Time, region, service string) string {
 		terminationString)
 }
 
-func canonicalString(request *http.Request) string {
+func canonicalString(request *http.Request, payload string) string {
 	var buffer bytes.Buffer
 
 	buffer.WriteString(request.Method)
@@ -111,9 +111,13 @@ func canonicalString(request *http.Request) string {
 	buffer.WriteString("\n")
 	buffer.WriteString(canonicalHeaders(request.Header, request.Host))
 	buffer.WriteString("\n")
-	buffer.WriteString(fmt.Sprintf("%x", sha256.Sum256([]byte("")))) // cheating, fixme
+	buffer.WriteString(hashedBody(payload))
 
 	return buffer.String()
+}
+
+func hashedBody(payload string) string {
+	return fmt.Sprintf("%x", sha256.Sum256([]byte(payload)))
 }
 
 func signedHeaders(header http.Header) string {

@@ -41,7 +41,7 @@ x-amz-date:20150830T123600Z
 
 content-type;host;x-amz-date
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
-	got := canonicalString(fakeRequest())
+	got := canonicalString(fakeRequest(), "")
 
 	if got != expected {
 		t.Errorf("Expected: %s\nGot: %s", expected, got)
@@ -49,7 +49,7 @@ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
 }
 
 func TestStringToSign(t *testing.T) {
-	canonicalString := canonicalString(fakeRequest())
+	canonicalString := canonicalString(fakeRequest(), "")
 	hashedCanonicalString := fmt.Sprintf("%x", sha256.Sum256([]byte(canonicalString)))
 
 	expected := `AWS4-HMAC-SHA256
@@ -106,7 +106,7 @@ func TestAWSSignature(t *testing.T) {
 	timestamp := time.Date(2015, 8, 30, 12, 36, 0, 0, time.UTC)
 	request := fakeRequest()
 	expected := "5d672d79c15b13162d9279b0855cfba6789a8edb4c82c400e06b5924a6f2b5d7"
-	got := AWSSignature(request, timestamp, region, service, awsKey)
+	got := AWSSignature(request, "", timestamp, region, service, awsKey)
 
 	if got != expected {
 		t.Errorf("Expected: %s\nGot: %s", expected, got)
