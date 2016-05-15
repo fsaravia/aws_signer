@@ -1,5 +1,7 @@
 # Golang AWSSigner
 
+[![Build Status](https://travis-ci.org/fsaravia/aws_signer.svg?branch=master)](https://travis-ci.org/fsaravia/aws_signer)
+
 `AWSSigner` is a Go library for signing AWS requests according to the specifications of the [AWS Signature Version 4 Signing Process](http://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html).
 
 # Why?
