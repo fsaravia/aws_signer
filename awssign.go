@@ -1,4 +1,4 @@
-package AWSSigner
+package awssign
 
 import (
 	"bytes"

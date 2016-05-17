@@ -1,8 +1,8 @@
-# Golang AWSSigner
+# Golang awssign
 
 [![Build Status](https://travis-ci.org/fsaravia/aws_signer.svg?branch=master)](https://travis-ci.org/fsaravia/aws_signer)
 
-`AWSSigner` is a Go library for signing AWS requests according to the specifications of the [AWS Signature Version 4 Signing Process](http://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html).
+`awssign` is a Go library for signing AWS requests according to the specifications of the [AWS Signature Version 4 Signing Process](http://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html).
 
 # Why?
 
@@ -35,7 +35,7 @@ request.Header.Add("Content-Type", "application/x-www-form-urlencoded; charset=u
 Instantiate a `Signer` and sign it!
 
 ```go
-signer := AWSSigner.Signer{
+signer := awssign.Signer{
 	Region:          "us-east-1",
 	Service:         "iam",
 	AccessKeyID:     "<YOUR-ACCESS-KEY-ID>",
@@ -60,7 +60,7 @@ payload := form.Encode()
 
 request, _ := http.NewRequest(requestMethod, parsedUrl.String(), strings.NewReader(payload))
 
-signer := AWSSigner.Signer{
+signer := awssign.Signer{
 	Region:          "us-east-1",
 	Service:         "ses",
 	AccessKeyID:     "<YOUR-ACCESS-KEY-ID>",
