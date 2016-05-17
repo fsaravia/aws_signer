@@ -23,7 +23,7 @@ func fakeRequest() *http.Request {
 	parsedUrl, _ := url.Parse("https://iam.amazonaws.com/")
 	parsedUrl.RawQuery = query.Encode()
 
-	request, _ := http.NewRequest(http.MethodGet, parsedUrl.String(), nil)
+	request, _ := http.NewRequest("GET", parsedUrl.String(), nil)
 
 	request.Header.Add("X-Amz-Date", "20150830T123600Z")
 	request.Header.Add("Content-Type", "application/x-www-form-urlencoded; charset=utf-8")
