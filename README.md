@@ -1,6 +1,6 @@
 # Golang awssign
 
-[![Build Status](https://travis-ci.org/fsaravia/aws_signer.svg?branch=master)](https://travis-ci.org/fsaravia/aws_signer)
+[![Build Status](https://travis-ci.org/fsaravia/awssign.svg?branch=master)](https://travis-ci.org/fsaravia/awssign)
 
 `awssign` is a Go library for signing AWS requests according to the specifications of the [AWS Signature Version 4 Signing Process](http://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html).
 
@@ -11,7 +11,7 @@ AWS provides a full featured [Go SDK](https://github.com/aws/aws-sdk-go) but thi
 # Install
 
 ```bash
-$ go get github.com/fsaravia/aws_signer
+$ go get github.com/fsaravia/awssign
 ```
 
 # Usage
