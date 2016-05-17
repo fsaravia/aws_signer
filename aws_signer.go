@@ -149,7 +149,10 @@ func canonicalHeaders(header http.Header, host string) string {
 	var buffer bytes.Buffer
 
 	for _, name := range headerNames {
-		buffer.WriteString(fmt.Sprintf("%s:%s\n", name, lowerCaseHeaders[name]))
+		buffer.WriteString(name)
+		buffer.WriteString(":")
+		buffer.WriteString(lowerCaseHeaders[name])
+		buffer.WriteString("\n")
 	}
 
 	buffer.WriteString("\n")
