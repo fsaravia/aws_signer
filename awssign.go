@@ -123,7 +123,7 @@ func hashedBody(payload string) string {
 func signedHeaders(header http.Header) string {
 	var headerNames []string
 
-	for name, _ := range header {
+	for name := range header {
 		headerNames = append(headerNames, strings.ToLower(name))
 	}
 	headerNames = append(headerNames, hostHeader)
