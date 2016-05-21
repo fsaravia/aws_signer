@@ -1,4 +1,4 @@
-package awssign
+package awsign
 
 import (
 	"bytes"
