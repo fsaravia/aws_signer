@@ -1,3 +1,26 @@
+/*
+Package aswign implments a simple library for signing HTTP requests made to
+Amazon AWS according to the specifications of the AWS Signature Version 4
+Signing Process: http://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html.
+
+It exposes a Signer struct which can be used to set the necessary configuration
+variables:
+
+	signer := awsign.Signer{
+		Region:          "us-east-1",
+		Service:         "iam",
+		AccessKeyID:     "<YOUR-ACCESS-KEY-ID>",
+		AccessKeySecret: "<YOUR-ACCESS-KEY-SECRET>"}
+
+Signer exposes a Sign method which accepts an http.Request object and an
+optional payload with the request body:
+
+	request, _ := http.NewRequest(http.MethodGet, "http://example.org", nil)
+
+	payload = "Sample request body"
+
+	signer.Sign(request, payload)
+*/
 package awsign
 
 import (
@@ -21,6 +44,9 @@ const (
 	terminationString string = "aws4_request"
 )
 
+// Signer is a convenience mechanism for storing the configuration
+// variables that are necessary for signing requests made to AWS, it allows users
+// to instantiate it once and reuse it over several requests.
 type Signer struct {
 	Region          string
 	Service         string
@@ -28,6 +54,10 @@ type Signer struct {
 	AccessKeySecret string
 }
 
+// Sign accepts a request and an optional payload and signs the request by
+// adding an Authorization header with the content required by Amazon AWS
+//
+// http://docs.aws.amazon.com/general/latest/gr/sigv4-add-signature-to-request.html
 func (signer *Signer) Sign(request *http.Request, payload string) {
 	timestamp := time.Now().UTC()
 
