@@ -101,12 +101,12 @@ f536975d06c0309214f805bb90ccff089219ecd68b2577efef23edd43b7e1a59`
 	}
 }
 
-func TestAWSSignature(t *testing.T) {
+func TestSignature(t *testing.T) {
 	awsKey := "wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY"
 	timestamp := time.Date(2015, 8, 30, 12, 36, 0, 0, time.UTC)
 	request := fakeRequest()
 	expected := "5d672d79c15b13162d9279b0855cfba6789a8edb4c82c400e06b5924a6f2b5d7"
-	got := AWSSignature(request, "", timestamp, region, service, awsKey)
+	got := Signature(request, "", timestamp, region, service, awsKey)
 
 	if got != expected {
 		t.Errorf("Expected: %s\nGot: %s", expected, got)
