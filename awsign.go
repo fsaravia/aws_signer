@@ -70,6 +70,13 @@ func (signer *Signer) Sign(request *http.Request, payload string) {
 	request.Header.Add("Authorization", fmt.Sprintf("%s, Credential=%s, SignedHeaders=%s, Signature=%s", algorithm, credential, signedHeaders, signature))
 }
 
+// AWSSignature generates the request signature that has to be added to the
+// Authorization header of a requests according to AWS documentation. This
+// method can be used to manually generate the signature without using the
+// Signer.Sign method.
+//
+// Direct Callers of this method should handle the creation of the
+// Authorization header manually.
 func AWSSignature(request *http.Request, payload string, timestamp time.Time, region, service, key string) string {
 	string := canonicalString(request, payload)
 	hashed := fmt.Sprintf("%x", sha256.Sum256([]byte(string)))
