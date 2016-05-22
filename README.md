@@ -1,6 +1,7 @@
 # Golang awsign
 
 [![Build Status](https://travis-ci.org/fsaravia/awsign.svg?branch=master)](https://travis-ci.org/fsaravia/awsign)
+[![Go Report Card](https://goreportcard.com/badge/github.com/fsaravia/awsign)](https://goreportcard.com/report/github.com/fsaravia/awsign)
 
 `awsign` is a Go library for signing AWS requests according to the specifications of the [AWS Signature Version 4 Signing Process](http://docs.aws.amazon.com/general/latest/gr/signing_aws_api_requests.html).
 
